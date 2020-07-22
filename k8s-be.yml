@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: k8s-be-container
-        image: gcr.io/handy-zephyr-272321/k8s-be:1.0.3
+        image: gcr.io/handy-zephyr-272321/k8s-be:2020-07-22-10.39.25.658
         ports:
         - name: http-service
           containerPort: 80
