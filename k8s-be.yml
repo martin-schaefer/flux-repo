@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-be
+  namespace: k8s-spring-boot-apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-be
+  template:
+    metadata:
+      labels:
+        app: k8s-be
+        fluentd-log-format: spring-boot-json
+      annotations:
+           prometheus.io/scrape: 'true'
+           prometheus.io/path: '/actuator/prometheus'
+           prometheus.io/port: '8010'
+           fluxcd.io/automated: "true"
+    spec:
+      containers:
+      - name: k8s-be-container
+        image: gcr.io/handy-zephyr-272321/k8s-be:1.0.2
+        ports:
+        - name: http-service
+          containerPort: 80
+        - name: http-management
+          containerPort: 8010
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8010
+          timeoutSeconds: 5
+          periodSeconds: 30
+          successThreshold: 1
+          failureThreshold: 1
