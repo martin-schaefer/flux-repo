@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,13 +17,13 @@ spec:
         app: k8s-be
         fluentd-log-format: spring-boot-json
       annotations:
-           prometheus.io/scrape: 'true'
-           prometheus.io/path: '/actuator/prometheus'
-           prometheus.io/port: '8010'
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/actuator/prometheus'
+        prometheus.io/port: '8010'
     spec:
       containers:
       - name: k8s-be-container
-        image: gcr.io/handy-zephyr-272321/k8s-be:1.0.2
+        image: gcr.io/handy-zephyr-272321/k8s-be:1.0.0
         ports:
         - name: http-service
           containerPort: 80
